@@ -1,4 +1,4 @@
-package com.devsuperior.demo.services.exceptions;
+package com.devsuperior.demo.service.exceptions;
 
 
 public class ConstraintViolationException extends RuntimeException{

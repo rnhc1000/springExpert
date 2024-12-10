@@ -53,7 +53,8 @@ public class CityService {
 
   public Optional<City> validateCityId(Long id) {
 
-    return Optional.ofNullable(cityRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("City not registered!")));
+    return Optional.ofNullable(cityRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("City not registered!")));
   }
 
 }
