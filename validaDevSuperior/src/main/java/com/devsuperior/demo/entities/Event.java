@@ -19,9 +19,16 @@ public class Event {
 	@ManyToOne
 	@JoinColumn(name = "city_id")
 	private City city;
-	
+
+//	@Column(name = "city_id", nullable = false, insertable = false, updatable = false)
+//	private Long  cityId;
+
 	public Event() {
   }
+
+	public Event(Long id) {
+		this.id = id;
+	}
 
 	public Event(Long id, String name, LocalDate date, String url) {
 		this.id = id;
@@ -29,10 +36,6 @@ public class Event {
 		this.date = date;
 		this.url = url;
   }
-
-	public Event(Long cityId) {
-	}
-
 
 	public Long getId() {
 		return id;

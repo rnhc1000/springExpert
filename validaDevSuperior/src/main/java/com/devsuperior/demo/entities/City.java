@@ -22,7 +22,7 @@ public class City {
 	@Size(min = 2)
 	private String name;
 	
-	@OneToMany(mappedBy = "city")
+	@OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
 	private final List<Event> events = new ArrayList<>();
 	
 	public City() {
@@ -33,7 +33,10 @@ public class City {
 		this.name = name;
 	}
 
-	public Long getId() {
+  public City(Long cityId) {
+  }
+
+  public Long getId() {
 		return id;
 	}
 
