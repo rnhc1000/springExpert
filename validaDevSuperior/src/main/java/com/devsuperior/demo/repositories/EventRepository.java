@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
@@ -34,6 +33,6 @@ Page<Event> searchCityAndEvents(Pageable pageable);
         INSERT INTO tb_event (name, date, url, city_id) VALUES (:name, :date, :url, :city_id)
     """
 )
-void saveEvent(@Param("name") String name, @Param("date") LocalDate date,
+Event saveEvent(@Param("name") String name, @Param("date") LocalDate date,
                @Param("url") String url, @Param("city_id") Long city_id);
 }

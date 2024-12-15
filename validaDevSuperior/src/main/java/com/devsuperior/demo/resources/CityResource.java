@@ -3,6 +3,7 @@ package com.devsuperior.demo.resources;
 
 import com.devsuperior.demo.dto.CityDTO;
 import com.devsuperior.demo.services.CityService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +28,15 @@ public class CityResource {
   private CityService cityService;
 
   @GetMapping(value = "/cities")
-  public ResponseEntity<Page<CityDTO>> getAllCities(Pageable pageable) {
-    Page<CityDTO> cities = cityService.findAllPaged(pageable);
+  public ResponseEntity<List<CityDTO>> getAllCities() {
+    List<CityDTO> cities = cityService.searchAllCities();
 
     return ResponseEntity.ok().body(cities);
   }
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping(value = "/cities")
-  public ResponseEntity<CityDTO> insert(@RequestBody CityDTO cityDTO) {
+  public ResponseEntity<CityDTO> insert(@Valid @RequestBody CityDTO cityDTO) {
     cityDTO = cityService.insert(cityDTO);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
         .buildAndExpand(cityDTO.getId()).toUri();

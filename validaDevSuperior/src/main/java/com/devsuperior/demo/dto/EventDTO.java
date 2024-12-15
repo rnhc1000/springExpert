@@ -1,12 +1,23 @@
 package com.devsuperior.demo.dto;
 
+import com.devsuperior.demo.entities.Event;
+import jakarta.validation.constraints.*;
+
 import java.time.LocalDate;
 
 public class EventDTO {
   private Long id;
+
+  @NotBlank(message = "Campo requerido")
   private String name;
+
+  @NotBlank(message = "Campo requerido")
   private String url;
+
+  @FutureOrPresent(message = "A data do evento não pode ser passada")
   private LocalDate date;
+
+  @NotNull(message = "Campo requerido")
   private Long cityId;
 
   public EventDTO(Long id, String name, String url, LocalDate date, Long cityId) {
@@ -26,6 +37,13 @@ public class EventDTO {
   }
 
   public EventDTO() {}
+
+  public EventDTO(Event event) {
+    this.id = event.getId();
+    this.name = event.getName();
+    this.url = event.getUrl();
+    this.date = event.getDate();
+  }
 
   public Long getId() {
     return id;

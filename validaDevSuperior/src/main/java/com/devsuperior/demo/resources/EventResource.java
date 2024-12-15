@@ -3,6 +3,7 @@ package com.devsuperior.demo.resources;
 import com.devsuperior.demo.dto.EventCityDTO;
 import com.devsuperior.demo.dto.EventDTO;
 import com.devsuperior.demo.services.EventService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +30,7 @@ public class EventResource {
 
   @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
   @PostMapping(value = "/events")
-  public ResponseEntity<EventDTO> insert(@RequestBody EventDTO eventDTO) {
+  public ResponseEntity<EventDTO> insert(@Valid @RequestBody EventDTO eventDTO) {
     eventDTO = eventService.registerEvent(eventDTO);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
         .buildAndExpand(eventDTO.getId()).toUri();

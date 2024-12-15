@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,15 +21,14 @@ public class CityService {
   public CityService() {
   }
 
+  @Autowired
   public CityService(CityRepository cityRepository, DtoToEntity dtoToEntity) {
     this.cityRepository = cityRepository;
     this.dtoToEntity = dtoToEntity;
   }
 
-  @Autowired
   private CityRepository cityRepository;
 
-  @Autowired
   private DtoToEntity dtoToEntity;
 
   @Transactional
@@ -37,6 +37,13 @@ public class CityService {
     Page<City> cities = cityRepository.findAllCustomPaged(pageable);
 
     return cities.map(CityDTO::new);
+  }
+
+  @Transactional
+  public List<CityDTO> searchAllCities() {
+
+    List<City> city = cityRepository.findAll();
+    return city.stream().map(CityDTO::new).toList();
   }
 
   @Transactional
