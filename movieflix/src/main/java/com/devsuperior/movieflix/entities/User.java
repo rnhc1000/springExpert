@@ -126,7 +126,19 @@ public class User implements UserDetails {
 		return Objects.equals(id, other.id);
 	}
 
-	@Override
+  @Override
+  public String toString() {
+    return "User{" +
+           "id=" + id +
+           ", name='" + name + '\'' +
+           ", email='" + email + '\'' +
+           ", password='" + password + '\'' +
+           ", roles=" + roles +
+           ", reviews=" + reviews +
+           '}';
+  }
+
+  @Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return roles;
 	}

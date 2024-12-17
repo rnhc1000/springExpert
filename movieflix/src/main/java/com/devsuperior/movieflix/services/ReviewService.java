@@ -13,8 +13,11 @@ public class ReviewService {
 
   private final ReviewRepository reviewRepository;
 
-  public ReviewService(ReviewRepository reviewRepository) {
+  private final UserService userService;
+
+  public ReviewService(ReviewRepository reviewRepository, UserService userService) {
     this.reviewRepository = reviewRepository;
+    this.userService = userService;
   }
 
   @Transactional
@@ -22,21 +25,19 @@ public class ReviewService {
 
     Review review = new Review();
     Movie movie = new Movie();
-    User user = new User();
-    user.setId(reviewDTO.getUserId());
-    user.setEmail(reviewDTO.getUserEmail());
-    user.setName(reviewDTO.getUserName());
+    User user = userService.getUserAuthenticated();
+
+    reviewDTO.setUserEmail(user.getEmail());
+    reviewDTO.setUserName(user.getName());
+    reviewDTO.setUserId(user.getId());
     movie.setId(reviewDTO.getMovieId());
+    review.setText(reviewDTO.getText());
     review.setMovie(movie);
     review.setUser(user);
-    review.setText(reviewDTO.getText());
 
-    review = reviewRepository.saveAndFlush(review);
-
-    Long idUser = review.getUser().getId();
-//    String nameUser = review.getUser().getUsername();
-//    String mailUser = review.getUser().getEmail();
-    reviewDTO.setUserId(idUser);
+    review = reviewRepository.save(review);
+    Long idReview = review.getId();
+    reviewDTO.setId(idReview);
 
     return reviewDTO;
   }
