@@ -11,6 +11,7 @@ public class StandardErrorDTO {
 	private String path;
 	
 	public StandardErrorDTO() {
+		// TODO document why this constructor is empty
 	}
 
 	public Instant getTimestamp() {

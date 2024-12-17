@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ValidationErrorDTO extends StandardErrorDTO {
 
-	private List<FieldMessageDTO> errors = new ArrayList<>();
+	private final List<FieldMessageDTO> errors = new ArrayList<>();
 
 	public List<FieldMessageDTO> getErrors() {
 		return errors;

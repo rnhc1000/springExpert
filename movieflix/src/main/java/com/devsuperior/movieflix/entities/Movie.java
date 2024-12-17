@@ -36,7 +36,7 @@ public class Movie {
     private Genre genre;
 
     @OneToMany(mappedBy = "movie")
-    private List<Review> reviews = new ArrayList<>();
+    private final List<Review> reviews = new ArrayList<>();
 
     public Movie(){
 
@@ -123,5 +123,19 @@ public class Movie {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+               "id=" + id +
+               ", title='" + title + '\'' +
+               ", subTitle='" + subTitle + '\'' +
+               ", year=" + year +
+               ", imgUrl='" + imgUrl + '\'' +
+               ", synopsis='" + synopsis + '\'' +
+               ", genre=" + genre +
+               ", reviews=" + reviews +
+               '}';
     }
 }
