@@ -3,9 +3,12 @@ package com.devsuperior.movieflix.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +21,17 @@ import com.devsuperior.movieflix.repositories.UserRepository;
 @Service
 public class UserService implements UserDetailsService {
 
-	@Autowired
-	private UserRepository repository;
-	
-	@Autowired
-	private AuthService authService;
-	
+	private final UserRepository repository;
+
+	private final AuthService authService;
+
+
+	public UserService(UserRepository repository, AuthService authService) {
+		this.repository = repository;
+		this.authService = authService;
+	}
+
+
 	@Transactional(readOnly = true)
 	public UserDTO getProfile() {
 		return new UserDTO(authService.authenticated());
@@ -33,7 +41,7 @@ public class UserService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
 		List<UserDetailsProjection> result = repository.searchUserAndRolesByEmail(username);
-		if (result.size() == 0) {
+		if (result.isEmpty()) {
 			throw new UsernameNotFoundException("Email not found");
 		}
 		
@@ -45,5 +53,28 @@ public class UserService implements UserDetailsService {
 		}
 		
 		return user;
+	}
+
+	protected User authenticated() {
+		try {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
+			String username = jwtPrincipal.getClaim("username");
+			return repository.findByEmail(username);
+		}
+		catch (Exception e) {
+			throw new UsernameNotFoundException("Invalid user");
+		}
+	}
+
+	@Transactional(readOnly = true)
+	public UserDTO getMe() {
+		User entity = authenticated();
+		return new UserDTO(entity);
+	}
+
+	@Transactional(readOnly = true)
+	public User getUserAuthenticated() {
+		return authenticated();
 	}
 }
