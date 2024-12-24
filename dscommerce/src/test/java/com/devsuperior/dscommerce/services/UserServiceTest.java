@@ -53,8 +53,6 @@ public class UserServiceTest {
 
     Mockito.when(userRepository.findByEmail(existingUsername)).thenReturn(Optional.of(user));
     Mockito.when(userRepository.findByEmail(nonExistingUsername)).thenReturn(Optional.empty());
-
-
   }
 
   @Test
@@ -64,6 +62,7 @@ public class UserServiceTest {
 
     Assertions.assertNotNull(result);
     Assertions.assertEquals(result.getUsername(), existingUsername);
+
   }
 
   @Test
@@ -83,6 +82,7 @@ public class UserServiceTest {
 
     Assertions.assertNotNull(result);
     Assertions.assertEquals(result.getUsername(), existingUsername);
+
   }
 
   @Test
@@ -93,6 +93,7 @@ public class UserServiceTest {
     Assertions.assertThrows(UsernameNotFoundException.class, () -> {
       userService.authenticated();
     });
+
   }
 
   @Test
