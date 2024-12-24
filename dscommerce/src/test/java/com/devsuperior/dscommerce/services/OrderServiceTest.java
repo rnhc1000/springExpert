@@ -117,7 +117,7 @@ public class OrderServiceTest {
     Mockito.doThrow(ForbiddenException.class).when(authService).validateSelfOrAdmin(any());
 
     Assertions.assertThrows(ForbiddenException.class, () -> {
-      OrderDTO result = orderService.findById(existingOrderId);
+      orderService.findById(existingOrderId);
     });
 
   }
