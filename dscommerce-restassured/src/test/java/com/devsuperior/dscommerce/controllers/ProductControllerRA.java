@@ -35,5 +35,6 @@ public class ProductControllerRA {
         .body("imgUrl", equalTo( "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/2-big.jpg"))
         .body("price", is(2190.0F))
         .body("categories.id", hasItems(2,3));
+
   }
 }
