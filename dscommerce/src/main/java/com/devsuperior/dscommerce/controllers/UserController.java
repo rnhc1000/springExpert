@@ -14,13 +14,17 @@ import com.devsuperior.dscommerce.services.UserService;
 @RequestMapping(value = "/users")
 public class UserController {
 
-    @Autowired
-    private UserService service;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
     @GetMapping(value = "/me")
     public ResponseEntity<UserDTO> getMe() {
-    	UserDTO dto = service.getMe();
+    	UserDTO dto = userService.getMe();
+
         return ResponseEntity.ok(dto);
     }
 }

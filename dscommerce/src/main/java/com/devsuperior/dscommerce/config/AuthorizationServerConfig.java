@@ -64,10 +64,13 @@ public class AuthorizationServerConfig {
 	@Value("${security.jwt.duration}")
 	private Integer jwtDurationSeconds;
 
-	@Autowired
-	private UserDetailsService userDetailsService;
+	private final UserDetailsService userDetailsService;
 
-	@Bean
+  public AuthorizationServerConfig(UserDetailsService userDetailsService) {
+    this.userDetailsService = userDetailsService;
+  }
+
+  @Bean
 	@Order(2)
 	public SecurityFilterChain asSecurityFilterChain(HttpSecurity http) throws Exception {
 
