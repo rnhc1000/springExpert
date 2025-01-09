@@ -15,12 +15,16 @@ import com.devsuperior.dscommerce.services.CategoryService;
 @RequestMapping(value = "/categories")
 public class CategoryController {
 
-    @Autowired
-    private CategoryService service;
+    private final CategoryService categoryService;
+
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
 
     @GetMapping
     public ResponseEntity<List<CategoryDTO>> findAll() {
-        List<CategoryDTO> list = service.findAll();
+        List<CategoryDTO> list = categoryService.findAll();
         return ResponseEntity.ok(list);
     }
 }
