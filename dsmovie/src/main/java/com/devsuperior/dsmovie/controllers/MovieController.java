@@ -2,6 +2,7 @@ package com.devsuperior.dsmovie.controllers;
 
 import java.net.URI;
 
+import com.devsuperior.dsmovie.dto.MovieGenreDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,19 +28,36 @@ import jakarta.validation.Valid;
 @RequestMapping(value = "/movies")
 public class MovieController {
 
-	@Autowired
-	private MovieService service;
+	private final MovieService service;
 
-	@GetMapping
+  public MovieController(MovieService service) {
+    this.service = service;
+  }
+
+  @GetMapping
 	public Page<MovieDTO> findAll(
 			@RequestParam(value="title", defaultValue = "") String title, 
 			Pageable pageable) {
 		return service.findAll(title, pageable);
 	}
 
-	@GetMapping(value = "/{id}")
-	public MovieDTO findById(@PathVariable Long id) {
-		return service.findById(id);
+	@GetMapping(produces = "application/vdn.devsuperior.dsmovie-v1+json")
+	public Page<MovieGenreDTO> findAllV1(
+			@RequestParam(value="title", defaultValue = "") String title,
+			Pageable pageable) {
+		return service.findAllMovieGenre(title, pageable);
+	}
+
+	@GetMapping(value = "/{id}", produces = "application/vdn.devsuperior.dsmovie-v1+json")
+	public MovieGenreDTO findByIdV1(@PathVariable Long id) {
+
+		return service.findByIdMovieGenre(id);
+	}
+
+	@GetMapping(value = "/{idd}")
+	public MovieDTO findById(@PathVariable Long idd) {
+
+		return service.findById(idd);
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")

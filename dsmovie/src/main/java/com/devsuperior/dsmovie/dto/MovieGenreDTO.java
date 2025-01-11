@@ -1,48 +1,49 @@
 package com.devsuperior.dsmovie.dto;
 
+import com.devsuperior.dsmovie.entities.MovieEntity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.URL;
+import org.springframework.hateoas.RepresentationModel;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
-import org.hibernate.validator.constraints.URL;
-
-import com.devsuperior.dsmovie.entities.MovieEntity;
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
-import org.springframework.hateoas.RepresentationModel;
-
-public class MovieDTO extends RepresentationModel<MovieDTO> {
+public class MovieGenreDTO extends RepresentationModel<MovieGenreDTO> {
 
 	private static final DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
 
 	private Long id;
-	
+
 	@NotBlank(message = "Required field")
 	@Size(min = 5, max = 80, message = "Title must be between 5 and 80 characters")
 	private String title;
-	
+
 	@PositiveOrZero(message = "Score should be greater than or equal to zero")
 	private Double score;
-	
+
 	@PositiveOrZero(message = "Count should be greater than or equal to zero")
 	private Integer count;
-	
+
 	@NotBlank(message = "Required field")
 	@URL(message = "Field must be a valid url")
 	private String image;
 
-	public MovieDTO(Long id, String title, Double score, Integer count, String image) {
+	private String genre;
+
+	public MovieGenreDTO(Long id, String title, Double score, Integer count, String image, String genre) {
 		this.id = id;
 		this.title = title;
 		this.score = Double.valueOf(df.format(score));
 		this.count = count;
 		this.image = image;
-	}
+    this.genre = genre;
+  }
 
-	public MovieDTO(MovieEntity movie) {
-		this(movie.getId(), movie.getTitle(), movie.getScore(), movie.getCount(), movie.getImage());
+	public MovieGenreDTO(MovieEntity movie) {
+		this(movie.getId(), movie.getTitle(), movie.getScore(), movie.getCount(), movie.getImage(), movie.getGenreEntity().getName());
 	}
 
 	public Long getId() {
@@ -63,6 +64,10 @@ public class MovieDTO extends RepresentationModel<MovieDTO> {
 
 	public String getImage() {
 		return image;
+	}
+
+	public String getGenre() {
+		return genre;
 	}
 
 	@Override
