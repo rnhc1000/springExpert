@@ -1,7 +1,7 @@
 ## _Roadmap to Spring Certification_ <br />
 
-I started working on getting a Spring Certification and decide to dive into it through @devsuperior training to be better 
-prepared to tackle the best. There are 3 courses available, Spring Professional, Spring Expert and Spring Reference.
+I started working on Spring Professional Developer Certification and decide to dive into it through @devsuperior training to be better 
+prepared to tackle this beast. There are 3 courses available, Spring Professional, Spring Expert and Spring Reference.
 This is how I played with the challenges of the Spring Expert with focus on Unit Tests using JUnit, Integration Tests using MockMVC and
 RestAssured and of course lots of code based on TDD.
 
