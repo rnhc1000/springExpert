@@ -17,9 +17,12 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping(value = "/scores")
 public class ScoreController {
-	
-	@Autowired
-	private ScoreService service;
+
+	public ScoreController(ScoreService service) {
+		this.service = service;
+	}
+
+	private final ScoreService service;
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
 	@PutMapping
