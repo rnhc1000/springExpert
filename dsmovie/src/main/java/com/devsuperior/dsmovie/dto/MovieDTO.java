@@ -42,6 +42,7 @@ public class MovieDTO extends RepresentationModel<MovieDTO> {
 	}
 
 	public MovieDTO(MovieEntity movie) {
+
 		this(movie.getId(), movie.getTitle(), movie.getScore(), movie.getCount(), movie.getImage());
 	}
 

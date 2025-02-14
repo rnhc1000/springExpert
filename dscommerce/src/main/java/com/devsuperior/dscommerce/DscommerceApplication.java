@@ -36,6 +36,5 @@ public class DscommerceApplication implements CommandLineRunner {
           numOfCores
       );
     }
-
   }
 }
